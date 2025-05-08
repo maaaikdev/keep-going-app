@@ -44,6 +44,10 @@ const RacesList = ({ races, dateFilterCalendar }) => {
     };
 
     const groupedRaces = groupByMonth(racesFilter);
+
+    function capitalizeFirstLetter(val) {
+        return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+    }
     
 
     return (
@@ -122,7 +126,7 @@ const RacesList = ({ races, dateFilterCalendar }) => {
             </div> */}
             {Object.entries(groupedRaces).map(([month, monthRaces]) => (
                 <div key={month} className="carrusel-container">
-                    <h3 className="month-title">{month.toUpperCase()}</h3>
+                    <h3 className="month-title">{capitalizeFirstLetter(month)}</h3>
                     <div className="cards-scroll">
                         {monthRaces.map((race) => (
                             <div key={race.id} className="box-card">
