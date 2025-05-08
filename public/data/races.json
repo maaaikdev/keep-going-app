@@ -1,0 +1,163 @@
+[
+    {
+        "id": "carrera-01",
+        "name": "Trail de los Nevados",
+        "type": "trail",
+        "distances": [10, 21, 42],
+        "date": "2025-08-10",
+        "departament": "Tolima",
+        "city": "Murillo",
+        "startAltitude": 2800,
+        "positiveElevationGain": 1800,
+        "organizer": "Trail Colombia",
+        "registrationURL": "https://trailcolombia.com/evento/nevados",
+        "location": {
+            "lat": 4.878,
+            "lng": -75.17
+        },
+        "description": "Carrera de montaña en el Parque Natural de los Nevados.",
+        "image": "https://picsum.photos/600/400",
+        "featured": true
+    },
+    {
+        "id": "carrera-02",
+        "name": "Maratón de Bogotá",
+        "type": "asfalto",
+        "distances": [10, 21, 42],
+        "date": "2025-07-25",
+        "departament": "Cundinamarca",
+        "city": "Bogotá",
+        "startAltitude": 2600,
+        "positiveElevationGain": 500,
+        "organizer": "Maratón de Bogotá",
+        "registrationURL": "https://maratonbogota.com/inscripcion",
+        "location": {
+            "lat": 4.61,
+            "lng": -74.08
+        },
+        "description": "Una de las maratones más importantes de América Latina.",
+        "image": "https://picsum.photos/600/400",
+        "featured": true
+    },
+    {
+        "id": "carrera-03",
+        "name": "Ultra Trail de la Sierra Nevada",
+        "type": "trail",
+        "distances": [50, 80, 100],
+        "date": "2025-09-15",
+        "departament": "Caldas",
+        "city": "Manizales",
+        "startAltitude": 3000,
+        "positiveElevationGain": 2500,
+        "organizer": "Ultra Trail Colombia",
+        "registrationURL": "https://ultratrailcolombia.com/inscripcion",
+        "location": {
+            "lat": 5.07,
+            "lng": -75.51
+        },
+        "description": "Desafío extremo en la Sierra Nevada.",
+        "image": "https://picsum.photos/600/400",
+        "featured": false
+    },    
+    {
+        "id": "carrera-04",
+        "name": "Carrera de la Mujer",
+        "type": "asfalto",
+        "distances": [5, 10],
+        "date": "2025-03-08",
+        "departament": "Cundinamarca",
+        "city": "Bogotá",
+        "startAltitude": 2600,
+        "positiveElevationGain": 200,
+        "organizer": "Carrera de la Mujer",
+        "registrationURL": "https://carreradelamujer.com/inscripcion",
+        "location": {
+            "lat": 4.61,
+            "lng": -74.08
+        },
+        "description": "Evento deportivo para celebrar el Día Internacional de la Mujer.",
+        "image": "https://picsum.photos/600/400",
+        "featured": true
+    },
+    {
+        "id": "carrera-05",
+        "name": "Ultra Trail 2",
+        "type": "trail",
+        "distances": [50, 80, 100],
+        "date": "2025-09-20",
+        "departament": "Caldas",
+        "city": "Manizales",
+        "startAltitude": 3000,
+        "positiveElevationGain": 2500,
+        "organizer": "Ultra Trail Colombia",
+        "registrationURL": "https://ultratrailcolombia.com/inscripcion",
+        "location": {
+            "lat": 5.07,
+            "lng": -75.51
+        },
+        "description": "Desafío extremo en la Sierra Nevada.",
+        "image": "https://picsum.photos/600/400",
+        "featured": false
+    },
+    {
+        "id": "carrera-06",
+        "name": "Ultra Trail 3---",
+        "type": "trail",
+        "distances": [50, 80, 100],
+        "date": "2025-09-05",
+        "departament": "Caldas",
+        "city": "Manizales",
+        "startAltitude": 3000,
+        "positiveElevationGain": 2500,
+        "organizer": "Ultra Trail Colombia",
+        "registrationURL": "https://ultratrailcolombia.com/inscripcion",
+        "location": {
+            "lat": 5.07,
+            "lng": -75.51
+        },
+        "description": "Desafío extremo en la Sierra Nevada.",
+        "image": "https://picsum.photos/600/400",
+        "featured": false
+    },
+    {
+        "id": "carrera-07",
+        "name": "Ultra Trail 4",
+        "type": "trail",
+        "distances": [50, 80, 100],
+        "date": "2025-09-25",
+        "departament": "Caldas",
+        "city": "Manizales",
+        "startAltitude": 3000,
+        "positiveElevationGain": 2500,
+        "organizer": "Ultra Trail Colombia",
+        "registrationURL": "https://ultratrailcolombia.com/inscripcion",
+        "location": {
+            "lat": 5.07,
+            "lng": -75.51
+        },
+        "description": "Desafío extremo en la Sierra Nevada.",
+        "image": "https://picsum.photos/600/400",
+        "featured": false
+    },
+    {
+        "id": "carrera-08",
+        "name": "Ultra Trail 5-----",
+        "type": "trail",
+        "distances": [50, 80, 100],
+        "date": "2025-09-11",
+        "departament": "Caldas",
+        "city": "Manizales",
+        "startAltitude": 3000,
+        "positiveElevationGain": 2500,
+        "organizer": "Ultra Trail Colombia",
+        "registrationURL": "https://ultratrailcolombia.com/inscripcion",
+        "location": {
+            "lat": 5.07,
+            "lng": -75.51
+        },
+        "description": "Desafío extremo en la Sierra Nevada.",
+        "image": "https://picsum.photos/600/400",
+        "featured": false
+    }
+]
+  
