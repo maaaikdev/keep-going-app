@@ -1,21 +1,24 @@
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./RacesList.scss"; // Import the CSS file for styling
+import CalendarRaces from "../CalendarRaces/CalendarRaces";
+import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
 
-const RacesList = ({ races, dateFilterCalendar }) => {
+const RacesList = ({ races}) => {
 
     console.log("races", races)
-    console.log("dateFilterCalendar", dateFilterCalendar)
 
     const [search, setSearch] = useState(""); //TODO searching...
     //const [dateFilter, setDateFilter] = useState("");   //TODO filter by date
     const [typeFilter, setTypeFilter] = useState("");   //TODO filter by type
     const [distanceFilter, setDistanceFilter] = useState("");   //TODO filter by distance
     const [placeFilter, setPlaceFilter] = useState("");   //TODO filter by distance
+    const [filteredRaces, setFilteredRaces] = useState(null);
 
-    const visibleRaces = Array.isArray(dateFilterCalendar) && dateFilterCalendar.length > 0
-  ? dateFilterCalendar
-  : races;
+    const visibleRaces = Array.isArray(filteredRaces) && filteredRaces.length > 0
+    ? filteredRaces
+    : races;
     
     const racesFilter = visibleRaces.filter((race) => {
         const matchName = race.name.toLowerCase().includes(search.toLowerCase());
@@ -45,14 +48,14 @@ const RacesList = ({ races, dateFilterCalendar }) => {
 
     const groupedRaces = groupByMonth(racesFilter);
 
-    function capitalizeFirstLetter(val) {
-        return String(val).charAt(0).toUpperCase() + String(val).slice(1);
-    }
-    
-
     return (
         <>
             <h2>Listado de Carreras</h2>
+
+            <CalendarRaces 
+				races={races} 
+				onSelectDate={(filtered) => setFilteredRaces(filtered)} 
+			/>
 
             {/* <input
                 type="text"
@@ -102,43 +105,28 @@ const RacesList = ({ races, dateFilterCalendar }) => {
                 onChange={(e) => setPlaceFilter(e.target.value)} 
                 style={{ marginBottom: 10, padding: 5, width: "-webkit-fill-available" }}
             /> */}
-            {/* <div className="carrusel-container">
-                <h2>Popular</h2>
-                <div className="cards-scroll">
-                    {racesFilter.map((race) => (
-                        <div key={race.id} className="box-card">
-                            <img src={race.image} alt={race.name}/>
-                            <div className="banner-card">
-                                <div className="date-event">
-                                    <span className="day">{getDate(race.date).getDate()}</span>
-                                    <span className="month">{getDate(race.date).toLocaleString("es-ES", { month: "short" })}</span>
-                                </div>
-                                <h3>{race.name}</h3>
-                                <p>Tipo: <strong>{race.type}</strong> </p>
-                                <p>Distancias: <strong>{race.distances.join(", ")} km</strong> </p>
-                                <p>Ciudad: <strong>{race.city}, {race.departament}</strong></p>
-                                <a href={race.registrationURL} target="_blank" rel="noopener noreferrer" className="btn-registration">Registration</a>
-                                <div className="icon">♡</div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div> */}
-            {Object.entries(groupedRaces).map(([month, monthRaces]) => (
+            
+            {Object.entries(groupedRaces || {}).map(([month, monthRaces]) => (
                 <div key={month} className="carrusel-container">
                     <h3 className="month-title">{capitalizeFirstLetter(month)}</h3>
                     <div className="cards-scroll">
                         {monthRaces.map((race) => (
-                            <div key={race.id} className="box-card">
+                            <div key={race.id} 
+                                className="box-card"
+                                style={{
+                                    border:
+                                        Array.isArray(filteredRaces) &&
+                                        filteredRaces.length > 0 &&
+                                        race.id === filteredRaces[0]?.id
+                                            ? "3px solid orange"
+                                            : "1px solid #eaeaea",
+                                        borderRadius: "12px",
+                                }}
+                            >
                                 <img src={race.image} alt={race.name} />
                                 <div className="banner-card">
                                     <div className="date-event">
                                         <span className="day">{getDate(race.date).getDate()}</span>
-                                        {/* <span className="month">
-                                            {getDate(race.date).toLocaleString("es-ES", {
-                                                month: "short",
-                                            })}
-                                        </span> */}
                                     </div>
                                     <h3>{race.name}</h3>
                                     <p>Tipo: <strong>{race.type}</strong></p>
@@ -152,6 +140,7 @@ const RacesList = ({ races, dateFilterCalendar }) => {
                                     >
                                         Registration
                                     </a>
+                                    <Link to={`/evento/${race.id}`} className="btn-registration">Ver Detalle</Link>
                                     <div className="icon">♡</div>
                                 </div>
                             </div>

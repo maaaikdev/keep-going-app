@@ -1,7 +1,9 @@
 import './App.css';
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RacesList from './components/RacesList/RacesList';
 import CalendarRaces from './components/CalendarRaces/CalendarRaces';
+import RaceDetail from './components/RaceDetail/RaceDetail';
 
 function App() {
 	const [races, setRaces] = useState([]);
@@ -20,15 +22,21 @@ function App() {
 	}, [])
 
 	return (
-		<div style={{ padding: 24 }} >
-			<CalendarRaces 
+		<div>
+
+			{/* <CalendarRaces 
 				races={races} 
 				onSelectDate={(filtered) => setFilteredRaces(filtered)} 
-			/>
-			<RacesList 
+			/> */}
+			<Routes>
+				<Route path="/" element={<RacesList races={races} dateFilterCalendar={filteredRaces} />} />
+				<Route path="/evento/:id" element={<RaceDetail races={races} />} />
+			</Routes>
+
+			{/* <RacesList 
 				races={races} 
 				dateFilterCalendar={filteredRaces}
-			/>
+			/> */}
 		</div>
 	);
 }

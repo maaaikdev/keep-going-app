@@ -1,0 +1,90 @@
+.event-detail {
+    display: flex;
+    flex-direction: column;
+    //max-width: 600px;
+    margin: auto;
+    //border-radius: 16px;
+    //overflow: hidden;
+    //box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    .event-header img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    .event-content {
+        padding: 1.5rem;
+        background: #fff;
+        box-shadow: 0 -12px 12px rgba(0, 0, 0, 0.3);
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        margin-top: -18px;
+        h1 {
+            font-size: 1.5rem;
+            color: #3c5a69;
+        }
+        .event-info {
+            margin-bottom: 24px;
+            p {
+                margin: 0.5rem 0;
+                display: flex;
+                align-items: center;
+            }
+            .event-type {
+                display: flex;
+                align-items: center;
+                margin-bottom: 16px;
+                .icon-details {
+                    background: #eae0ff;
+                    aspect-ratio: 1;
+                    width: 34px;
+                    max-width: 44px;
+                    border-radius: 50%;
+                    text-align: center;
+                    padding: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    //margin: auto;
+                    color: #5e35b1;
+                    margin-right: 10px;
+                }
+                p {
+                    color: #3c5a69;
+                }
+            }
+        }
+        .event-about {
+            h3 {
+                margin:0 0 8px;
+            }
+            p {
+                font-size: 16px;
+                line-height: 24px;
+                color: #3c5a69;
+                margin: 0;
+            }
+        }
+        .btn-register {
+            background: #5e35b1;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 34px;
+            margin-top: 1.5rem;
+            width: 100%;
+            border: none;
+            font-size: 18px;
+            &:hover {
+                background-color: #eae0ff;
+                color: #5e35b1;
+            }
+        }
+        .back-link {
+            display: block;
+            margin-top: 1rem;
+            text-align: center;
+            color: #5e35b1;
+            text-decoration: underline;
+        }
+    }
+} 

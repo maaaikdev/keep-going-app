@@ -7,15 +7,23 @@ import "./CalendarRaces.scss"; // Import the CSS file for styling
 
 const CalendarRaces = ({ races, onSelectDate }) => {
 
-    const [rangeValue, setRangeValue] = useState(null);
+    //const [rangeValue, setRangeValue] = useState(null); //TODO Code to range dates
+    const [selectedDate, setSelectedDate] = useState(null);
 
-    const raceDates = races.map(d => new Date(d.fecha).toDateString());
+    //const raceDates = races.map(d => new Date(d.fecha).toDateString());
+    const eventDates = races.map((d) => d.date); 
+    console.log("eventDates----", eventDates)
 
-    const tileClassName = ({ date}) => {
-        if(raceDates.includes(date.toDateString())) {
-            return 'highlight';
-        }
-        return null;
+    // const tileClassName = ({ date}) => {
+        // if(raceDates.includes(date.toDateString())) {
+        //     return 'highlight';
+        // }
+        // return null;
+    // };
+
+    const tileClassName = ({ date }) => {
+        const dateStr = date.toISOString().split("T")[0];
+        return eventDates.includes(dateStr) ? "event-day" : null;
     };
 
     // ✅ Validar que la fecha sea válida antes de pasarla a Calendar
@@ -24,19 +32,65 @@ const CalendarRaces = ({ races, onSelectDate }) => {
         return isNaN(d) ? new Date() : d;
     };
 
-    const handleApply = () => {
-        if (!rangeValue || !Array.isArray(rangeValue)) return;
-        console.log("rangeValue", rangeValue);
+    // const handleApply = () => { //TODO Code to range dates
+    //     if (!rangeValue || !Array.isArray(rangeValue)) return;
+    //     console.log("rangeValue", rangeValue);
 
-        const [start, end] = rangeValue;
-        const filtered = races.filter((race) => {
+    //     const [start, end] = rangeValue;
+    //     const filtered = races.filter((race) => {
+    //         const raceDate = new Date(race.date + "T12:00:00");
+    //         return raceDate >= start && raceDate <= end;
+    //     });
+
+    //     console.log("filtered", filtered);
+
+    //     onSelectDate(filtered); // 🔥 envía carreras filtradas
+    // };
+
+    // Cuando se selecciona una fecha
+    const handleDateSelect = (date) => {
+        // const formattedDate = date.toISOString().split("T")[0];
+        // setSelectedDate(formattedDate);
+
+        // // Filtra los eventos de ese día
+        // const filtered = races.filter((race) => race.date === formattedDate);
+
+        // // Devuelve los eventos filtrados
+        // onSelectDate(filtered);
+
+        // const selectedMonth = date.toLocaleString("es-ES", { month: "long" });
+
+        // const monthEvents = races.filter((race) => {
+        //     const raceDate = new Date(race.date + "T12:00:00");
+        //     const raceMonth = raceDate.toLocaleString("es-ES", { month: "long" });
+        //     return raceMonth === selectedMonth;
+        // });
+
+        // onSelectDate(monthEvents); // Enviar eventos del mes al padre
+
+        const clickedDateStr = date.toISOString().split("T")[0];
+  const clickedMonth = date.toLocaleString("es-ES", { month: "long" });
+
+  const monthEvents = races
+            .filter((race) => {
             const raceDate = new Date(race.date + "T12:00:00");
-            return raceDate >= start && raceDate <= end;
-        });
+            const raceMonth = raceDate.toLocaleString("es-ES", { month: "long" });
+            return raceMonth === clickedMonth;
+            })
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        console.log("filtered", filtered);
+        // Reorganizar colocando el clicado primero si existe
+        const clickedEvent = monthEvents.find((race) => race.date === clickedDateStr);
+        const otherEvents = monthEvents.filter((race) => race.date !== clickedDateStr);
 
-        onSelectDate(filtered); // 🔥 envía carreras filtradas
+        const finalList = clickedEvent ? [clickedEvent, ...otherEvents] : monthEvents;
+
+        onSelectDate(finalList);
+    };
+
+    const handleReset = () => {
+        setSelectedDate(null);
+        onSelectDate({ selectedEventId: null, events: races }); // 🔄 Muestra todas las carreras
     };
 
     const resetStyle = {
@@ -59,31 +113,12 @@ const CalendarRaces = ({ races, onSelectDate }) => {
     return (
         <>
             <h2>Calendario</h2>
-            <Calendar 
-                selectRange={true}
+            <Calendar
                 tileClassName={tileClassName}
-                value={rangeValue || undefined}
-                onChange={setRangeValue}
-                onClickDay={(date) => onSelectDate(date.toISOString().split("T")[0])}
+                value={selectedDate ? new Date(selectedDate + "T12:00:00") : undefined}
+                onChange={handleDateSelect}
             />
-            {/* <Calendar 
-                selectRange={true}
-                tileClassName={tileClassName}
-                value={rangeValue || getValidDate(onSelectDate)}
-                onChange={setRangeValue}
-                onClickDay={(date) => onSelectDate(date.toISOString().split("T")[0])}
-            /> */}
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1rem" }}>
-                <button onClick={() => setRangeValue(null)} style={resetStyle}>Reset</button>
-                <button onClick={handleApply} style={applyStyle}>Apply</button>
-            </div>
-            <style>{`
-                .highlight {
-                    background: orange !important;
-                    color: white;
-                    border-radius: 50%;
-                }
-            `}</style>
+            <button onClick={handleReset} className="clean-selection">Limpiar selección</button>
         </>
     );
       
