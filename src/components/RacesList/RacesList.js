@@ -48,6 +48,24 @@ const RacesList = ({ races}) => {
 
     const groupedRaces = groupByMonth(racesFilter);
 
+    const monthOrder = [
+        "enero", "febrero", "marzo", "abril", "mayo", "junio",
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    ];
+    const currentMonthIndex = new Date().getMonth();
+    console.log("currentMonthIndex", currentMonthIndex);
+    const orderedMonths = [
+        ...monthOrder.slice(currentMonthIndex),
+        ...monthOrder.slice(0, currentMonthIndex)
+    ];
+    
+    console.log("orderedMonths", orderedMonths);
+    const orderedGroupedRaces = orderedMonths
+        .filter((month) => groupedRaces[month])
+        .map((month) => [month, groupedRaces[month]]);
+    
+    console.log("orderedGroupedRaces", orderedGroupedRaces);
+
     return (
         <>
             <h2>Listado de Carreras</h2>
@@ -106,7 +124,7 @@ const RacesList = ({ races}) => {
                 style={{ marginBottom: 10, padding: 5, width: "-webkit-fill-available" }}
             /> */}
             
-            {Object.entries(groupedRaces || {}).map(([month, monthRaces]) => (
+            {orderedGroupedRaces.map(([month, monthRaces]) => (
                 <div key={month} className="carrusel-container">
                     <h3 className="month-title">{capitalizeFirstLetter(month)}</h3>
                     <div className="cards-scroll">
@@ -132,14 +150,14 @@ const RacesList = ({ races}) => {
                                     <p>Tipo: <strong>{race.type}</strong></p>
                                     <p>Distancias:{" "} <strong>{race.distances.join(", ")} km</strong></p>
                                     <p>Ciudad: <strong>{race.city}, {race.departament}</strong></p>
-                                    <a
+                                    {/* <a
                                         href={race.registrationURL}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="btn-registration"
                                     >
                                         Registration
-                                    </a>
+                                    </a> */}
                                     <Link to={`/evento/${race.id}`} className="btn-registration">Ver Detalle</Link>
                                     <div className="icon">♡</div>
                                 </div>

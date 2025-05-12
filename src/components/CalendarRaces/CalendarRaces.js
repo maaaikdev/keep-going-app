@@ -12,18 +12,19 @@ const CalendarRaces = ({ races, onSelectDate }) => {
 
     //const raceDates = races.map(d => new Date(d.fecha).toDateString());
     const eventDates = races.map((d) => d.date); 
-    console.log("eventDates----", eventDates)
-
-    // const tileClassName = ({ date}) => {
-        // if(raceDates.includes(date.toDateString())) {
-        //     return 'highlight';
-        // }
-        // return null;
-    // };
-
     const tileClassName = ({ date }) => {
         const dateStr = date.toISOString().split("T")[0];
-        return eventDates.includes(dateStr) ? "event-day" : null;
+        //return eventDates.includes(dateStr) ? "event-day" : null;
+        const racesThatDay = races.filter((race) => race.date === dateStr);
+
+        if (racesThatDay.length > 0) {
+            const types = racesThatDay.map((r) => r.type);
+
+            if (types.includes("trail")) return "event-trail";
+            if (types.includes("asfalto")) return "event-running";
+        }
+
+        return null;
     };
 
     // ✅ Validar que la fecha sea válida antes de pasarla a Calendar
@@ -69,9 +70,9 @@ const CalendarRaces = ({ races, onSelectDate }) => {
         // onSelectDate(monthEvents); // Enviar eventos del mes al padre
 
         const clickedDateStr = date.toISOString().split("T")[0];
-  const clickedMonth = date.toLocaleString("es-ES", { month: "long" });
+        const clickedMonth = date.toLocaleString("es-ES", { month: "long" });
 
-  const monthEvents = races
+        const monthEvents = races
             .filter((race) => {
             const raceDate = new Date(race.date + "T12:00:00");
             const raceMonth = raceDate.toLocaleString("es-ES", { month: "long" });
@@ -111,15 +112,23 @@ const CalendarRaces = ({ races, onSelectDate }) => {
     };
 
     return (
-        <>
+        <div className="calendar-comp">
             <h2>Calendario</h2>
+            <div className="calendar-legend">
+                <span className="legend-item">
+                    <span className="color-box event-running"></span> Running (Asfalto)
+                </span>
+                <span className="legend-item">
+                    <span className="color-box event-trail"></span> Trailrunning
+                </span>
+            </div>
             <Calendar
                 tileClassName={tileClassName}
                 value={selectedDate ? new Date(selectedDate + "T12:00:00") : undefined}
                 onChange={handleDateSelect}
-            />
+            />            
             <button onClick={handleReset} className="clean-selection">Limpiar selección</button>
-        </>
+        </div>
     );
       
 }

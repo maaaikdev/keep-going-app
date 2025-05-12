@@ -1,3 +1,6 @@
+.calendar-comp {
+    padding: 0 24px;
+}
 .react-calendar {
     border: none;
     border-radius: 20px;
@@ -108,4 +111,42 @@
     width: 100%;
     text-align: right;
     color: #607D8B;
+}
+.event-running {
+    background: orange !important;
+    color: white !important;
+    border-radius: 50% !important;
+}
+
+.event-trail {
+    background: green !important;
+    color: white !important;
+    border-radius: 50% !important;
+}
+
+.calendar-legend {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .color-box {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+    }
+
+    .event-running {
+      background: orange;
+    }
+
+    .event-trail {
+      background: green;
+    }
+  }
 }

@@ -2,11 +2,15 @@ import { useParams, Link } from "react-router-dom";
 import "./RaceDetail.scss";
 import { IoCalendarClearSharp, IoCompass, IoTicket, IoSwapHorizontal } from "react-icons/io5";
 import  capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
+import MapView from "../MapView/MapView";
 
 
 const RaceDetail = ({ races }) => {
     const { id } = useParams();
     const race = races.find((r) => r.id === id);
+    console.log("race detail", race);
+    const position = [race.location.lat, race.location.lng];
+    console.log("position", position);
 
     if (!race) return <p>Evento no encontrado</p>;
 
@@ -22,7 +26,7 @@ const RaceDetail = ({ races }) => {
                 <div className="event-info">
                     <div className="event-type">
                         <div className="icon-details"><IoCalendarClearSharp /></div>
-                        <p>{capitalizeFirstLetter(new Date(race.date).toLocaleDateString("es-ES", { weekday: "long", year: "numeric", month: "long", day: "numeric" }))}</p>
+                        <p>{capitalizeFirstLetter(new Date(race.date + "T12:00:00").toLocaleDateString("es-ES", { weekday: "long", year: "numeric", month: "long", day: "numeric" }))}</p>
                     </div>
                     <div className="event-type">
                         <div className="icon-details"><IoCompass /></div>
@@ -34,9 +38,11 @@ const RaceDetail = ({ races }) => {
                     </div>
                     <div className="event-type">
                         <div className="icon-details"><IoTicket /></div>
-                        <p>{race.price || "Gratis"} km</p>
+                        <p>Desde: {race.price || "Sin costo"}</p>
                     </div>
                 </div>
+
+                <MapView position={position} label={race.city} />
 
                 <div className="event-about">
                     <h3>Sobre el Evento</h3>
