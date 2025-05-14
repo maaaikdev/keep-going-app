@@ -7,6 +7,8 @@ import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
 
 const RacesList = ({ races}) => {
 
+    //https://ultrarunners.com.co/carreras/
+
     console.log("races", races)
 
     const [search, setSearch] = useState(""); //TODO searching...
