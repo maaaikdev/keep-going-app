@@ -163,7 +163,7 @@ export default function CalendarApp() {
             </div>
           ))
         ) : (
-          <p className="text-gray-400 text-sm">No hay eventos registrados.</p>
+          <p className="text-gray-400 text-sm">No hay eventos registrados.....</p>
         )}
       </div>
 
