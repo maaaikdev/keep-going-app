@@ -5,7 +5,7 @@ import "./CalendarRaces.scss"; // Import the CSS file for styling
 
 
 
-const CalendarRaces = ({ races, onSelectDate }) => {
+const CalendarRaces = ({ races, onSelectDate, onSelectDay }) => {
 
     //const [rangeValue, setRangeValue] = useState(null); //TODO Code to range dates
     const [selectedDate, setSelectedDate] = useState(null);
@@ -33,43 +33,11 @@ const CalendarRaces = ({ races, onSelectDate }) => {
         return isNaN(d) ? new Date() : d;
     };
 
-    // const handleApply = () => { //TODO Code to range dates
-    //     if (!rangeValue || !Array.isArray(rangeValue)) return;
-    //     console.log("rangeValue", rangeValue);
-
-    //     const [start, end] = rangeValue;
-    //     const filtered = races.filter((race) => {
-    //         const raceDate = new Date(race.date + "T12:00:00");
-    //         return raceDate >= start && raceDate <= end;
-    //     });
-
-    //     console.log("filtered", filtered);
-
-    //     onSelectDate(filtered); // 🔥 envía carreras filtradas
-    // };
-
     // Cuando se selecciona una fecha
     const handleDateSelect = (date) => {
-        // const formattedDate = date.toISOString().split("T")[0];
-        // setSelectedDate(formattedDate);
-
-        // // Filtra los eventos de ese día
-        // const filtered = races.filter((race) => race.date === formattedDate);
-
-        // // Devuelve los eventos filtrados
-        // onSelectDate(filtered);
-
-        // const selectedMonth = date.toLocaleString("es-ES", { month: "long" });
-
-        // const monthEvents = races.filter((race) => {
-        //     const raceDate = new Date(race.date + "T12:00:00");
-        //     const raceMonth = raceDate.toLocaleString("es-ES", { month: "long" });
-        //     return raceMonth === selectedMonth;
-        // });
-
-        // onSelectDate(monthEvents); // Enviar eventos del mes al padre
 
         const clickedDateStr = date.toISOString().split("T")[0];
+        const clickedDay = date.toLocaleString("es-ES", { day: "2-digit"});
         const clickedMonth = date.toLocaleString("es-ES", { month: "long" });
 
         const monthEvents = races
@@ -80,35 +48,34 @@ const CalendarRaces = ({ races, onSelectDate }) => {
             })
             .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        // Reorganizar colocando el clicado primero si existe
-        const clickedEvent = monthEvents.find((race) => race.date === clickedDateStr);
+            // Reorganizar colocando el clicado primero si existe 
+        // const clickedEvent = monthEvents.find((race) => race.date === clickedDateStr);
+        const clickedEvent = monthEvents.filter((race) => race.date === clickedDateStr);
         const otherEvents = monthEvents.filter((race) => race.date !== clickedDateStr);
 
-        const finalList = clickedEvent ? [clickedEvent, ...otherEvents] : monthEvents;
+        //const finalList = clickedEvent ? [clickedEvent, ...otherEvents] : monthEvents;
+        const finalList = clickedEvent
 
+        onSelectDay(clickedDay);
         onSelectDate(finalList);
     };
 
     const handleReset = () => {
         setSelectedDate(null);
         onSelectDate({ selectedEventId: null, events: races }); // 🔄 Muestra todas las carreras
+         onSelectDay("");
     };
 
-    const resetStyle = {
-        background: "transparent",
-        border: "none",
-        color: "#5e35b1",
-        fontWeight: "bold",
-        fontSize: "1rem",
+    const getEventsCount = (date) => {
+        const dateStr = date.toISOString().split("T")[0];
+        return races.filter((race) => race.date === dateStr).length;
     };
-    
-    const applyStyle = {
-        background: "#5e35b1",
-        border: "none",
-        color: "#fff",
-        fontWeight: "bold",
-        borderRadius: "12px",
-        padding: "0.5rem 1.5rem",
+
+    const getEventTypesForDate = (date) => {
+        const dateStr = date.toISOString().split("T")[0];
+        return races
+            .filter((race) => race.date === dateStr)
+            .map((race) => race.type);
     };
 
     return (
@@ -126,6 +93,19 @@ const CalendarRaces = ({ races, onSelectDate }) => {
                 tileClassName={tileClassName}
                 value={selectedDate ? new Date(selectedDate + "T12:00:00") : undefined}
                 onChange={handleDateSelect}
+                // tileContent={({ date }) => {
+                //     const count = getEventsCount(date);
+                //     return count > 0 ? <div className="event-count">{count}</div> : null;
+                // }}
+                tileContent={({ date }) => {
+                    const types = [...new Set(getEventTypesForDate(date))];
+                    return types.length > 0 ? (
+                    <div className="multi-type-indicators">
+                        {types.includes("asfalto") && <span className="dot dot-asfalto"></span>}
+                        {types.includes("trail") && <span className="dot dot-trail"></span>}
+                    </div>
+                    ) : null;
+                }}
             />            
             <button onClick={handleReset} className="clean-selection">Limpiar selección</button>
         </div>

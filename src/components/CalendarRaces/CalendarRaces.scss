@@ -50,6 +50,8 @@
     align-items: center;
     margin: auto;
     color: #333;
+    position: relative;
+    overflow: initial!important;
 }
   
 .react-calendar__tile:hover {
@@ -150,3 +152,42 @@
     }
   }
 }
+
+.event-count {
+  font-size: 0.7rem;
+  background: #5e35b1;
+  color: #fff;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-top: 2px;
+  position: absolute;
+  top: -2px;
+  right: -2px;
+}
+
+.multi-type-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.dot-asfalto {
+  background-color: orange;
+}
+
+.dot-trail {
+  background-color: green;
+}
+

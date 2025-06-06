@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RacesList from './components/RacesList/RacesList';
 import CalendarRaces from './components/CalendarRaces/CalendarRaces';
 import RaceDetail from './components/RaceDetail/RaceDetail';
+import CalendarApp from './components/CalendarApp/CalendarApp';
 
 function App() {
 	const [races, setRaces] = useState([]);
@@ -28,10 +29,11 @@ function App() {
 				races={races} 
 				onSelectDate={(filtered) => setFilteredRaces(filtered)} 
 			/> */}
-			<Routes>
-				<Route path="/" element={<RacesList races={races} dateFilterCalendar={filteredRaces} />} />
+			{/* <Routes>
+				<Route path="/" element={<RacesList races={races} />} />
 				<Route path="/evento/:id" element={<RaceDetail races={races} />} />
-			</Routes>
+			</Routes> */}
+			<CalendarApp />
 
 			{/* <RacesList 
 				races={races} 

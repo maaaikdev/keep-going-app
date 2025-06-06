@@ -5,30 +5,34 @@ import "./RacesList.scss"; // Import the CSS file for styling
 import CalendarRaces from "../CalendarRaces/CalendarRaces";
 import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
 
-const RacesList = ({ races}) => {
+const RacesList = ({ races }) => {
 
     //https://ultrarunners.com.co/carreras/
 
     console.log("races", races)
-
+    
     const [search, setSearch] = useState(""); //TODO searching...
     //const [dateFilter, setDateFilter] = useState("");   //TODO filter by date
     const [typeFilter, setTypeFilter] = useState("");   //TODO filter by type
     const [distanceFilter, setDistanceFilter] = useState("");   //TODO filter by distance
     const [placeFilter, setPlaceFilter] = useState("");   //TODO filter by distance
     const [filteredRaces, setFilteredRaces] = useState(null);
-
+    const [selectedDay, setSelectedDay] = useState("");
+    
+    console.log("races", filteredRaces)
     const visibleRaces = Array.isArray(filteredRaces) && filteredRaces.length > 0
     ? filteredRaces
     : races;
+
+    
     
     const racesFilter = visibleRaces.filter((race) => {
-        const matchName = race.name.toLowerCase().includes(search.toLowerCase());
+        //const matchName = race.name.toLowerCase().includes(search.toLowerCase());
         //const matchDate = dateFilterCalendar === "" || race.date === dateFilterCalendar;
         const matchType = typeFilter === "" || race.type === typeFilter;
         const matchDistance = distanceFilter === "" || race.distances.includes(Number(distanceFilter));
         const matchPlace = placeFilter === "" || race.city.toLowerCase().includes(placeFilter.toLowerCase()) || race.departament.toLowerCase().includes(placeFilter.toLowerCase());
-        return matchName && matchType && matchDistance && matchPlace;
+        return  matchType && matchDistance && matchPlace;
     });
 
     // Card design: 
@@ -55,18 +59,14 @@ const RacesList = ({ races}) => {
         "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
     ];
     const currentMonthIndex = new Date().getMonth();
-    console.log("currentMonthIndex", currentMonthIndex);
     const orderedMonths = [
         ...monthOrder.slice(currentMonthIndex),
         ...monthOrder.slice(0, currentMonthIndex)
     ];
-    
-    console.log("orderedMonths", orderedMonths);
+
     const orderedGroupedRaces = orderedMonths
         .filter((month) => groupedRaces[month])
         .map((month) => [month, groupedRaces[month]]);
-    
-    console.log("orderedGroupedRaces", orderedGroupedRaces);
 
     return (
         <>
@@ -74,7 +74,8 @@ const RacesList = ({ races}) => {
 
             <CalendarRaces 
 				races={races} 
-				onSelectDate={(filtered) => setFilteredRaces(filtered)} 
+				onSelectDate={(filtered) => setFilteredRaces(filtered)}
+                onSelectDay={clickedDay => setSelectedDay(clickedDay)}
 			/>
 
             {/* <input
@@ -128,7 +129,7 @@ const RacesList = ({ races}) => {
             
             {orderedGroupedRaces.map(([month, monthRaces]) => (
                 <div key={month} className="carrusel-container">
-                    <h3 className="month-title">{capitalizeFirstLetter(month)}</h3>
+                    <h3 className="month-title">{capitalizeFirstLetter(month)} {selectedDay}</h3>
                     <div className="cards-scroll">
                         {monthRaces.map((race) => (
                             <div key={race.id} 
@@ -146,7 +147,7 @@ const RacesList = ({ races}) => {
                                 <img src={race.image} alt={race.name} />
                                 <div className="banner-card">
                                     <div className="date-event">
-                                        <span className="day">{getDate(race.date).getDate()}</span>
+                                        <span className="day">{getDate(race.date).toLocaleString("es-ES", { day: "2-digit"})}</span>
                                     </div>
                                     <h3>{race.name}</h3>
                                     <p>Tipo: <strong>{race.type}</strong></p>
